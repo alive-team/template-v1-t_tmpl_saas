@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Product Name] - [Your Tagline Here]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#00D9FF',
+                        'dark-bg': '#0f0f0f',
+                        'dark-card': '#1a1a1a',
+                    },
+                    fontFamily: {
+                        'mono': ['Courier New', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #FF6B35 0%, #00D9FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .glow-secondary {
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent);
+        }
+
+        .keyword { color: #FF6B35; }
+        .string { color: #00D9FF; }
+        .function { color: #A8E6CF; }
+        .comment { color: #666666; }
+        .variable { color: #FFD93D; }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .card-hover:hover {
+            border-color: rgba(255, 107, 53, 0.8);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8555 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-gray-100">
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-bg/80 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center font-bold text-dark-bg">
+                    [L]
+                </div>
+                <span class="text-xl font-bold hidden sm:inline">[Product Name]</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#features" class="text-gray-400 hover:text-white transition">Features</a>
+                <a href="#pricing" class="text-gray-400 hover:text-white transition">Pricing</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Docs</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Blog</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="hidden sm:block px-4 py-2 text-gray-400 hover:text-white transition text-sm font-medium">
+                    Sign In
+                </button>
+                <button class="btn-primary px-6 py-2 rounded-lg text-dark-bg font-semibold text-sm">
+                    Get Started
+                </button>
+                <button class="md:hidden p-2 text-gray-400 hover:text-white" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-menu md:hidden bg-dark-card border-t border-gray-800" id="mobileMenu">
+            <div class="px-6 py-4 space-y-4">
+                <a href="#features" class="block text-gray-400 hover:text-white transition">Features</a>
+                <a href="#pricing" class="block text-gray-400 hover:text-white transition">Pricing</a>
+                <a href="#" class="block text-gray-400 hover:text-white transition">Docs</a>
+                <a href="#" class="block text-gray-400 hover:text-white transition">Blog</a>
+                <button class="w-full btn-primary px-6 py-2 rounded-lg text-dark-bg font-semibold text-sm">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-gradient pt-32 pb-24 px-6 md:pt-40 md:pb-32">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block mb-6 px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-full text-sm font-medium text-gray-300">
+                ✨ [New Feature Announcement]
+            </div>
+
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight fade-in">
+                <span class="gradient-text">[Turn Any Website Into Clean Data]</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed fade-in delay-1">
+                [Describe your product's value proposition. Explain how it solves a key problem for developers and what makes it unique.]
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 fade-in delay-2">
+                <button class="btn-primary px-8 py-4 rounded-lg text-dark-bg font-semibold w-full sm:w-auto flex items-center justify-center gap-2">
+                    Get Started Free
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </button>
+                <button class="px-8 py-4 rounded-lg border border-gray-700 text-gray-300 hover:text-white font-semibold w-full sm:w-auto transition">
+                    View Demo
+                </button>
+            </div>
+
+            <div class="fade-in delay-3 bg-dark-card border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                <div class="bg-gray-900 px-4 py-3 border-b border-gray-800 flex gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div class="code-block">
+                    <div class="text-gray-500 mb-4">// [Product Name] API Example</div>
+                    <div>
+                        <span class="keyword">const</span> response = <span class="keyword">await</span> <span class="function">[productName]</span>.<span class="function">scrape</span>({<br>
+                        &nbsp;&nbsp;url: <span class="string">'https://example.com'</span>,<br>
+                        &nbsp;&nbsp;format: <span class="string">'markdown'</span><br>
+                        });<br>
+                        <br>
+                        <span class="comment">// Returns clean, structured data</span><br>
+                        <span class="keyword">console</span>.<span class="function">log</span>(response.data);
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section class="border-b border-gray-800 py-8 px-6 overflow-hidden bg-dark-bg/50">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-center text-gray-500 text-sm mb-6">Trusted by leading companies</p>
+            <div class="flex items-center justify-center gap-8 flex-wrap opacity-70">
+                <div class="text-gray-400 font-semibold text-sm">[Company Logo]</div>
+                <div class="text-gray-400 font-semibold text-sm">[Company Logo]</div>
+                <div class="text-gray-400 font-semibold text-sm">[Company Logo]</div>
+                <div class="text-gray-400 font-semibold text-sm">[Company Logo]</div>
+                <div class="text-gray-400 font-semibold text-sm">[Company Logo]</div>
+            </div>
+            <div class="text-center text-gray-500 text-sm mt-6 space-x-6 flex justify-center flex-wrap">
+                <span>[XXX,XXX+] API Calls / Month</span>
+                <span>•</span>
+                <span>[XXXX+] Active Developers</span>
+                <span>•</span>
+                <span>[XX%] Uptime SLA</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="py-24 px-6 bg-dark-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Powerful Features</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">[Description of key features and capabilities that make your product stand out]</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 1]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description explaining the benefit and how it helps developers solve real problems]</p>
+                </div>
+
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">🔧</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 2]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description explaining how this capability provides value]</p>
+                </div>
+
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">🚀</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 3]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description emphasizing performance and efficiency]</p>
+                </div>
+
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 4]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description highlighting security and reliability]</p>
+                </div>
+
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 5]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description focusing on insights and analytics]</p>
+                </div>
+
+                <div class="card-hover p-6 bg-dark-card border border-gray-800 rounded-lg">
+                    <div class="text-3xl mb-4">🌐</div>
+                    <h3 class="text-xl font-bold mb-3">[Feature Title 6]</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">[Feature description describing integration capabilities]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-24 px-6 bg-dark-card/50 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Get Started in Minutes</h2>
+                <p class="text-gray-400 text-lg">[Explain how simple and straightforward your API/product is to integrate]</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-dark-bg font-bold text-lg">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">[Step 1 Title]</h3>
+                            <p class="text-gray-400">[Explanation of the first step in getting started with your product]</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-dark-bg font-bold text-lg">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">[Step 2 Title]</h3>
+                            <p class="text-gray-400">[Description of the second step and what developers should do]</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-dark-bg font-bold text-lg">3</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2">[Step 3 Title]</h3>
+                            <p class="text-gray-400">[Final step explanation and expected outcome]</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <div class="text-gray-500 mb-4">// Quick Start Example</div>
+                    <div>
+                        <span class="keyword">import</span> { <span class="function">[ProductName]</span> } <span class="keyword">from</span> <span class="string">'[package-name]'</span>;<br>
+                        <br>
+                        <span class="keyword">const</span> <span class="variable">client</span> = <span class="keyword">new</span> <span class="function">[ProductName]</span>({<br>
+                        &nbsp;&nbsp;apiKey: process.env.<span class="variable">API_KEY</span><br>
+                        });<br>
+                        <br>
+                        <span class="keyword">const</span> <span class="variable">result</span> = <span class="keyword">await</span> <span class="variable">client</span>.<span class="function">process</span>({<br>
+                        &nbsp;&nbsp;input: <span class="string">'[your data here]'</span>,<br>
+                        &nbsp;&nbsp;options: { <span class="variable">detailed</span>: <span class="keyword">true</span> }<br>
+                        });<br>
+                        <br>
+                        <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">result</span>);
+                    </div>
+                    <button class="mt-4 text-secondary hover:text-white transition text-sm font-medium flex items-center gap-2" onclick="copyCode(this)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                        Copy Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTEGRATIONS -->
+    <section class="py-24 px-6 bg-dark-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Works With Everything</h2>
+                <p class="text-gray-400 text-lg">[Supported languages, frameworks, and platforms]</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">📘</div>
+                    <p class="text-sm font-medium text-gray-400">JavaScript</p>
+                </div>
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">🐍</div>
+                    <p class="text-sm font-medium text-gray-400">Python</p>
+                </div>
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">🦀</div>
+                    <p class="text-sm font-medium text-gray-400">Rust</p>
+                </div>
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">☕</div>
+                    <p class="text-sm font-medium text-gray-400">Java</p>
+                </div>
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <p class="text-sm font-medium text-gray-400">Go</p>
+                </div>
+                <div class="p-6 bg-dark-card border border-gray-800 rounded-lg text-center card-hover">
+                    <div class="text-3xl mb-3">🔷</div>
+                    <p class="text-sm font-medium text-gray-400">TypeScript</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="py-24 px-6 bg-dark-card/50 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-gray-400 text-lg mb-8">[Pricing philosophy - focus on value and what's included]</p>
+
+                <div class="flex items-center justify-center gap-4">
+                    <span id="billingLabel" class="text-gray-400">Monthly</span>
+                    <button onclick="toggleBilling()" class="relative inline-flex h-8 w-14 items-center rounded-full bg-gray-700 transition">
+                        <span id="billingToggle" class="inline-block h-6 w-6 transform rounded-full bg-white transition absolute left-1"></span>
+                    </button>
+                    <span class="text-gray-400">Yearly <span class="text-secondary text-sm">(Save 20%)</span></span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <!-- Starter -->
+                <div class="bg-dark-bg border border-gray-800 rounded-lg p-8 card-hover flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">[Starter]</h3>
+                    <p class="text-gray-400 mb-6 text-sm">[For individual developers and small projects]</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold">$<span id="price1">29</span></span>
+                        <span class="text-gray-500">/month</span>
+                    </div>
+                    <button class="w-full border border-primary text-primary hover:bg-primary/10 py-3 rounded-lg font-semibold mb-8 transition">
+                        Get Started
+                    </button>
+                    <ul class="space-y-4 text-gray-400 text-sm flex-grow">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 1]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 2]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 3]</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Professional -->
+                <div class="bg-dark-bg border-2 border-primary rounded-lg p-8 card-hover flex flex-col relative">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <span class="bg-primary text-dark-bg px-4 py-1 rounded-full text-xs font-bold">MOST POPULAR</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2 mt-4">[Professional]</h3>
+                    <p class="text-gray-400 mb-6 text-sm">[For growing teams and production use]</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold">$<span id="price2">99</span></span>
+                        <span class="text-gray-500">/month</span>
+                    </div>
+                    <button class="btn-primary w-full py-3 rounded-lg font-semibold mb-8 text-dark-bg">
+                        Get Started
+                    </button>
+                    <ul class="space-y-4 text-gray-400 text-sm flex-grow">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 1]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 2]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 3]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 4]</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-dark-bg border border-gray-800 rounded-lg p-8 card-hover flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">[Enterprise]</h3>
+                    <p class="text-gray-400 mb-6 text-sm">[For large scale deployments and teams]</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold">Custom</span>
+                        <p class="text-gray-500 text-sm mt-2">Contact sales</p>
+                    </div>
+                    <button class="w-full border border-gray-700 text-gray-400 hover:text-white py-3 rounded-lg font-semibold mb-8 transition">
+                        Contact Sales
+                    </button>
+                    <ul class="space-y-4 text-gray-400 text-sm flex-grow">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 1]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 2]</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            <span>[Pricing Feature 3]</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-24 px-6 bg-dark-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Loved by Developers</h2>
+                <p class="text-gray-400 text-lg">[What developers say about your product]</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-dark-card border border-gray-800 rounded-lg p-6 card-hover">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 italic">"[Developer testimonial quote about how the product solved their problem or improved their workflow]"</p>
+                    <div>
+                        <p class="font-semibold">[Developer Name]</p>
+                        <p class="text-gray-500 text-sm">[Job Title at Company]</p>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card border border-gray-800 rounded-lg p-6 card-hover">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 italic">"[Another testimonial highlighting specific benefits like speed, ease of use, or integration]"</p>
+                    <div>
+                        <p class="font-semibold">[Developer Name]</p>
+                        <p class="text-gray-500 text-sm">[Job Title at Company]</p>
+                    </div>
+                </div>
+
+                <div class="bg-dark-card border border-gray-800 rounded-lg p-6 card-hover">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                        <span class="text-yellow-400">★</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 italic">"[Testimonial focused on ROI or results achieved - maybe mentioning time saved or cost reduced]"</p>
+                    <div>
+                        <p class="font-semibold">[Developer Name]</p>
+                        <p class="text-gray-500 text-sm">[Job Title at Company]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-24 px-6 bg-dark-card/50 border-t border-gray-800">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Build?</h2>
+            <p class="text-xl text-gray-400 mb-8">[Call to action message encouraging developers to get started - mention free trial or no credit card required]</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button class="btn-primary px-8 py-4 rounded-lg text-dark-bg font-semibold w-full sm:w-auto">
+                    Start Free Trial
+                </button>
+                <button class="px-8 py-4 rounded-lg border border-gray-700 text-gray-300 hover:text-white font-semibold w-full sm:w-auto transition">
+                    Read Documentation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-dark-bg border-t border-gray-800 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-5 gap-12 mb-12 pb-12 border-b border-gray-800">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center font-bold text-dark-bg">
+                            [L]
+                        </div>
+                        <span class="font-bold">[Product Name]</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">[Brief company description or tagline]</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Product</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition">Security</a></li>
+                        <li><a href="#" class="hover:text-white transition">Status</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Company</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Resources</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition">API Reference</a></li>
+                        <li><a href="#" class="hover:text-white transition">Guides</a></li>
+                        <li><a href="#" class="hover:text-white transition">Examples</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Legal</h4>
+                    <ul class="space-y-2 text-gray-500 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-gray-500 text-sm">
+                <p>&copy; 2024 [Product Name]. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-white transition">Twitter</a>
+                    <a href="#" class="hover:text-white transition">GitHub</a>
+                    <a href="#" class="hover:text-white transition">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition">Discord</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.remove('active');
+            });
+        });
+
+        let isYearly = false;
+
+        function toggleBilling() {
+            isYearly = !isYearly;
+            const toggle = document.getElementById('billingToggle');
+            const label = document.getElementById('billingLabel');
+
+            if (isYearly) {
+                toggle.style.left = 'auto';
+                toggle.style.right = '2px';
+                label.textContent = 'Annual';
+
+                document.getElementById('price1').textContent = '279';
+                document.getElementById('price2').textContent = '949';
+            } else {
+                toggle.style.left = '2px';
+                toggle.style.right = 'auto';
+                label.textContent = 'Monthly';
+
+                document.getElementById('price1').textContent = '29';
+                document.getElementById('price2').textContent = '99';
+            }
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const text = codeBlock.innerText.replace('Copy Code', '').trim();
+
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg> Copied!';
+
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-hover, .fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
