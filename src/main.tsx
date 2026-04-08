@@ -1,3 +1,4 @@
+import "@fontsource-variable/inter"
 import { createRoot } from "react-dom/client"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { RouterProvider, createRouter, createRootRoute, createRoute, Outlet } from "@tanstack/react-router"
